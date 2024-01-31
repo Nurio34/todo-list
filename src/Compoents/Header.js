@@ -3,9 +3,10 @@ import { FaBookOpen } from "react-icons/fa6";
 import { GrAttachment } from "react-icons/gr";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
-function Header({ updateTitleFn, title }) {
+function Header({ updateTitleFn, title, handleReadonlyFn }) {
     return (
-        <div className="header-container flex gap-2 items-center p-2 border-b-[1px] border-gray-300  ">
+        <div className="header-container flex gap-2 items-center p-2 border-b-[1px] border-gray-300 bg-black text-white text-lg  ">
+            {" "}
             <button>
                 <FaAngleLeft className=" pointer-events-none" />
             </button>
@@ -20,7 +21,7 @@ function Header({ updateTitleFn, title }) {
                     focus:outline-none"
                 onChange={(e) => updateTitleFn(e.target.value)}
             />
-            <button>
+            <button onClick={handleReadonlyFn}>
                 <FaBookOpen className=" ml-auto pointer-events-none" />
             </button>
             <button>
