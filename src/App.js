@@ -11,6 +11,18 @@ function App() {
                 todo: todo,
                 id: ind + 1,
                 listStyle: "",
+                alignStyle: "",
+                text: {
+                    bold : false,
+                    italic : false,
+                    decoration : ""
+                },
+                font : {
+                    size : 16,
+                    color : "",
+                    bgClr : ""
+                }
+                
             };
         });
 
@@ -68,11 +80,11 @@ function App() {
         });
     };
 
-    const handleCheckVisibilty = (id) => {
+    const handleCheckVisibilty = () => {
         const updatedTodoList = todos.todos.map((todoObj) => {
-            if (todoObj.id == id && todoObj.listStyle === "") {
+            if (todoObj.id == currentId && todoObj.listStyle === "") {
                 return { ...todoObj, listStyle: "checkbox" };
-            } else if (todoObj.id == id && todoObj.listStyle === "") {
+            } else if (todoObj.id == currentId && todoObj.listStyle !== "") {
                 return { ...todoObj, listStyle: "" };
             } else {
                 return todoObj;
@@ -83,6 +95,110 @@ function App() {
         });
         console.log(updatedTodoList);
     };
+
+    const setAlignLeft = () => {
+        const updatedTodoList = todos.todos.map((todoObj) => {
+            if (todoObj.id == currentId && todoObj.alignStyle !== "left") {
+                return { ...todoObj, alignStyle: "left" };
+            } else if (todoObj.id == currentId && todoObj.alignStyle === "left") {
+                return { ...todoObj, alignStyle: "" };
+            } else {
+                return todoObj;
+            }
+        });
+        setTodos((preState) => {
+            return { ...preState, todos: updatedTodoList };
+        });
+        console.log(updatedTodoList);
+    };
+
+    const setAlignCenter = () => {
+        const updatedTodoList = todos.todos.map((todoObj) => {
+            if (todoObj.id == currentId && todoObj.alignStyle !== "center") {
+                return { ...todoObj, alignStyle: "center" };
+            } else if (todoObj.id == currentId && todoObj.alignStyle === "center") {
+                return { ...todoObj, alignStyle: "" };
+            } else {
+                return todoObj;
+            }
+        });
+        setTodos((preState) => {
+            return { ...preState, todos: updatedTodoList };
+        });
+        console.log(updatedTodoList);
+    };
+
+    const setAlignRight = () => {
+        const updatedTodoList = todos.todos.map((todoObj) => {
+            if (todoObj.id == currentId && todoObj.alignStyle !== "right") {
+                return { ...todoObj, alignStyle: "right" };
+            } else if (todoObj.id == currentId && todoObj.alignStyle === "right") {
+                return { ...todoObj, alignStyle: "" };
+            } else {
+                return todoObj;
+            }
+        });
+        setTodos((preState) => {
+            return { ...preState, todos: updatedTodoList };
+        });
+        console.log(updatedTodoList);
+    };
+
+    const handleBold = () => {
+            const updatedTodoList = todos.todos.map((todoObj) => {
+                if (todoObj.id == currentId && todoObj.text.bold === false ) {
+                    return { ...todoObj, text : {...todoObj.text, bold : true} };
+                } else {
+                    return { ...todoObj, text : {...todoObj.text, bold : false} };
+                }
+            });
+            setTodos((preState) => {
+                return { ...preState, todos: updatedTodoList };
+            });
+            console.log(updatedTodoList);
+    };
+
+    const handleItalic = () => {
+        const updatedTodoList = todos.todos.map((todoObj) => {
+            if (todoObj.id == currentId && todoObj.text.italic === false ) {
+                return { ...todoObj, text : {...todoObj.text, italic : true} };
+            } else {
+                return { ...todoObj, text : {...todoObj.text, italic : false} };
+            }
+        });
+        setTodos((preState) => {
+            return { ...preState, todos: updatedTodoList };
+        });
+        console.log(updatedTodoList);
+};
+
+    const handleTextDecoration = (style) => {
+        const updatedTodoList = todos.todos.map((todoObj) => {
+            if (todoObj.id == currentId && todoObj.text.decoration !== style ) {
+                return { ...todoObj, text : {...todoObj.text, decoration : style} };
+            } else {
+                return { ...todoObj, text : {...todoObj.text, decoration : "none"} };
+            }
+        });
+        setTodos((preState) => {
+            return { ...preState, todos: updatedTodoList };
+        });
+        console.log(updatedTodoList);
+    };
+
+    const handleSelect = (value) => {
+        console.log(+value);
+        const updatedTodos = todos.todos.map((todoObj)=> {
+            if (todoObj.id == currentId) {
+                console.log(true);
+                return
+                // return {...todoObj, font :{...todoObj.font, size:+value}}
+            }
+        })
+        setTodos(preState=> {
+            return {...preState, todos:updatedTodos}
+        } )
+    }
 
     return (
         <div className="App">
@@ -97,11 +213,16 @@ function App() {
                 createTodoFn={createTodoFn}
                 readonly={readonly}
                 updateCurrentId={updateCurrentId}
-                currentId={currentId}
             />
             <Footer
                 handleCheckVisibilty={handleCheckVisibilty}
-                currentId={currentId}
+                setAlignLeft={setAlignLeft}
+                setAlignCenter={setAlignCenter}
+                setAlignRight={setAlignRight}
+                handleBold={handleBold}
+                handleItalic={handleItalic}
+                handleTextDecoration={handleTextDecoration}
+                handleSelect={handleSelect}
             />
         </div>
     );

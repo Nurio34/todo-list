@@ -5,7 +5,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 
 function Header({ updateTitleFn, title, handleReadonlyFn }) {
     return (
-        <div className="header-container flex gap-2 items-center p-2 border-b-[1px] border-gray-300 bg-black text-white text-lg  ">
+        <div className="header-container flex gap-2 items-center p-2 border-b-[1px] border-gray-300 bg-black text-white text-lg fixed top-0 z-10">
             {" "}
             <button>
                 <FaAngleLeft className=" pointer-events-none" />
@@ -16,7 +16,7 @@ function Header({ updateTitleFn, title, handleReadonlyFn }) {
                 id="titleInput"
                 placeholder="TITLE..."
                 value={title}
-                className=" border-b-[1px] border-black grow px-2 
+                className=" border-b-[1px] border-black grow px-2 text-black font-extrabold 
                     placeholder:text-black 
                     focus:outline-none"
                 onChange={(e) => updateTitleFn(e.target.value)}

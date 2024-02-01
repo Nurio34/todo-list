@@ -6,11 +6,10 @@ function Main({
     createTodoFn,
     readonly,
     updateCurrentId,
-    currentId,
 }) {
     const start = Array(10).fill("t");
     return (
-        <div className="main-container p-2">
+        <div className="main-container p-2 absolute top-10 w-full -z-10">
             {todos.map((todo) => {
                 return (
                     <TodoContainer
@@ -20,7 +19,6 @@ function Main({
                         createTodoFn={createTodoFn}
                         readonly={readonly}
                         updateCurrentId={updateCurrentId}
-                        currentId={currentId}
                     />
                 );
             })}
