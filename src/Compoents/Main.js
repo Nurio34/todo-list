@@ -6,6 +6,8 @@ function Main({
     createTodoFn,
     readonly,
     updateCurrentId,
+    updateLineCount,
+    handleComplated
 }) {
     const start = Array(10).fill("t");
     return (
@@ -19,6 +21,8 @@ function Main({
                         createTodoFn={createTodoFn}
                         readonly={readonly}
                         updateCurrentId={updateCurrentId}
+                        updateLineCount={updateLineCount}
+                        handleComplated={handleComplated}
                     />
                 );
             })}

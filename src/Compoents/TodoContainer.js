@@ -4,6 +4,8 @@ function TodoContainer({
     createTodoFn,
     readonly,
     updateCurrentId,
+    updateLineCount,
+    handleComplated
 }) {
     return (
         <div className="todo-container flex items-center">
@@ -17,12 +19,18 @@ function TodoContainer({
                         : { display: "none" }
                 }
                 className=" w-5 h-5"
+                onClick={async (e) => {
+                    await updateCurrentId(e.target.dataset.id);
+                    handleComplated()
+                }}
+                // onChange={}                
             />
             <textarea
                 name="todo"
                 id={todo.id}
                 value={todo.todo}
-                className=" border-b-2 border-gray-300 w-full resize-none h-8 pl-1
+                rows={todo.rows}
+                className=" border-b-2 border-gray-300 w-full resize-none min-h-8  pl-1
                             focus:outline-none"
                 style={{
                     textAlign:
@@ -37,9 +45,11 @@ function TodoContainer({
                     fontStyle : todo.text.italic ? "italic" : "normal",
                     textDecoration : 
                         todo.text.decoration === "underline" ? "underline" 
-                        : todo.text.decoration === "line-through" ? "line-through"
+                        : todo.complated || todo.text.decoration === "line-through" ? "line-through"
                         : "none",
-                    // fontSize : todo.font.size
+                    fontSize : todo.font.size,                    
+                    background : todo.font.bgClr,
+                    color : todo.complated ? "lightgray" : todo.font.color
                     }}
                 readOnly={readonly}
                 onChange={(e) => {
@@ -49,7 +59,6 @@ function TodoContainer({
                         todo: e.target.value,
                     };
                     updateTodoFn(todo);
-
                     const todoValue = e.target.value;
                     if (todoValue.length == 1) {
                         // const newTodo = { todo: "" };
@@ -59,6 +68,10 @@ function TodoContainer({
                 onClick={(e) => {
                     updateCurrentId(e.target.id);
                 }}
+                onFocus={e=>{
+                    updateCurrentId(e.target.id);
+                }}
+                onInput={e=>updateLineCount(e.target)}
             ></textarea>
         </div>
     );

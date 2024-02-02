@@ -21,8 +21,9 @@ function App() {
                     size : 16,
                     color : "",
                     bgClr : ""
-                }
-                
+                },
+                rows : 1,
+                complated : false
             };
         });
 
@@ -69,15 +70,13 @@ function App() {
         // });
     };
 
-    const handleReadonlyFn = () => {
-        console.log("clicked");
+    const handleReadonlyFn = () => {        
         setReadonly(!readonly);
     };
 
-    const updateCurrentId = (id) => {
-        setCurrentId((preState) => {
-            return id;
-        });
+    const updateCurrentId = async(id) => {
+        console.log(id);
+        await setCurrentId(id);
     };
 
     const handleCheckVisibilty = () => {
@@ -92,8 +91,7 @@ function App() {
         });
         setTodos((preState) => {
             return { ...preState, todos: updatedTodoList };
-        });
-        console.log(updatedTodoList);
+        });        
     };
 
     const setAlignLeft = () => {
@@ -108,8 +106,7 @@ function App() {
         });
         setTodos((preState) => {
             return { ...preState, todos: updatedTodoList };
-        });
-        console.log(updatedTodoList);
+        });        
     };
 
     const setAlignCenter = () => {
@@ -124,8 +121,7 @@ function App() {
         });
         setTodos((preState) => {
             return { ...preState, todos: updatedTodoList };
-        });
-        console.log(updatedTodoList);
+        });        
     };
 
     const setAlignRight = () => {
@@ -140,8 +136,7 @@ function App() {
         });
         setTodos((preState) => {
             return { ...preState, todos: updatedTodoList };
-        });
-        console.log(updatedTodoList);
+        });        
     };
 
     const handleBold = () => {
@@ -154,8 +149,7 @@ function App() {
             });
             setTodos((preState) => {
                 return { ...preState, todos: updatedTodoList };
-            });
-            console.log(updatedTodoList);
+            });            
     };
 
     const handleItalic = () => {
@@ -168,8 +162,7 @@ function App() {
         });
         setTodos((preState) => {
             return { ...preState, todos: updatedTodoList };
-        });
-        console.log(updatedTodoList);
+        });        
 };
 
     const handleTextDecoration = (style) => {
@@ -182,17 +175,16 @@ function App() {
         });
         setTodos((preState) => {
             return { ...preState, todos: updatedTodoList };
-        });
-        console.log(updatedTodoList);
+        });        
     };
 
-    const handleSelect = (value) => {
-        console.log(+value);
+    const handleSelect = (value) => {        
         const updatedTodos = todos.todos.map((todoObj)=> {
             if (todoObj.id == currentId) {
-                console.log(true);
-                return
-                // return {...todoObj, font :{...todoObj.font, size:+value}}
+                return {...todoObj, font :{...todoObj.font, size:+value}}
+            }
+            else {
+                return todoObj
             }
         })
         setTodos(preState=> {
@@ -200,7 +192,75 @@ function App() {
         } )
     }
 
-    return (
+    const handleColor = (value) => {        
+        const updatedTodos = todos.todos.map((todoObj)=> {
+            if (todoObj.id == currentId) {
+                return {...todoObj, font :{...todoObj.font, color:value}}
+            }
+            else {
+                return todoObj
+            }
+        })        
+        setTodos(preState=> {
+            return {...preState, todos:updatedTodos}
+        } )
+    }
+
+    const handleBgClr = (value) => {        
+        const updatedTodos = todos.todos.map((todoObj)=> {
+            if (todoObj.id == currentId) {
+                return {...todoObj, font :{...todoObj.font, bgClr:value}}
+            }
+            else {
+                return todoObj
+            }
+        })        
+        setTodos(preState=> {
+            return {...preState, todos:updatedTodos}
+        } )
+    }
+
+    const updateLineCount =(element) => {
+
+            const lineHeight = parseInt(window.getComputedStyle(element).lineHeight);
+          const lines = Math.floor(element.scrollHeight / lineHeight);
+ 
+          const updatedTodos = todos.todos.map((todoObj)=> {
+             if(todoObj.id == currentId ) {
+
+                return todoObj.rows = lines
+             }else{
+                return todoObj
+             }
+
+            })
+            setTodos(preState=> {
+                return {...preState, todos:updatedTodos}
+            } )
+        }
+
+
+    const handleComplated = () => {
+        const updatedTodos = todos.todos.map(todoObj=>{
+
+            if(todoObj.id == currentId) {
+                console.log(todoObj);
+
+                return { ...todoObj, complated:!todoObj.complated}
+            }
+            else{
+                return todoObj
+            }
+        })
+
+        setTodos(preState=>{
+            return {...todos, todos:updatedTodos}
+        })
+    }
+
+
+
+        return (
         <div className="App">
             <Header
                 updateTitleFn={updateTitleFn}
@@ -213,6 +273,8 @@ function App() {
                 createTodoFn={createTodoFn}
                 readonly={readonly}
                 updateCurrentId={updateCurrentId}
+                updateLineCount={updateLineCount}
+                handleComplated={handleComplated}
             />
             <Footer
                 handleCheckVisibilty={handleCheckVisibilty}
@@ -223,6 +285,8 @@ function App() {
                 handleItalic={handleItalic}
                 handleTextDecoration={handleTextDecoration}
                 handleSelect={handleSelect}
+                handleColor={handleColor}
+                handleBgClr={handleBgClr}
             />
         </div>
     );
